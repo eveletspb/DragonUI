@@ -68,6 +68,7 @@ function addon.cooldownMixin:update_cooldown(elapsed)
         self.remain = nil
         text:Hide()
         text:SetText ''
+        self:SetScript('OnUpdate', nil)
     end
 end
 
@@ -128,6 +129,7 @@ function addon.cooldownMixin:set_cooldown(start, duration)
         self.duiNextTick = 0 -- draw on the next frame instead of waiting out the previous tick
 
         local text = self.text or addon.cooldownMixin.create_string(self)
+        self:SetScript('OnUpdate', addon.cooldownMixin.update_cooldown)
         -- Apply user font if valid, otherwise addon.Fonts.ACTIONBAR stays from create_string
         local fontPath = db.font and db.font[1]
         text:SetFont(
@@ -142,6 +144,7 @@ function addon.cooldownMixin:set_cooldown(start, duration)
             self.text:Hide()
         end
         self.remain = nil
+        self:SetScript('OnUpdate', nil)
     end
 end
 
@@ -184,6 +187,7 @@ function addon.RefreshCooldowns()
                         -- If cooldowns are enabled but no active cooldown, ensure text is hidden
                         cooldown.text:Hide()
                         cooldown.remain = nil
+                        cooldown:SetScript('OnUpdate', nil)
                     end
                 end
             end

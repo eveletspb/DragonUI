@@ -417,6 +417,9 @@ function DragonUI_AnimatedHealthLossMixin:UpdateHealth(currentHealth, previousHe
 end
 
 function DragonUI_AnimatedHealthLossMixin:UpdateLossAnimation(currentHealth)
+	-- No active loss animation means there is nothing to draw or cancel.
+	-- Avoid a GUID/absorb-library lookup on every idle health-bar frame.
+	if not self.animationStartTime then return end
 	local totalAbsorb = addon.UFL_UnitGetTotalAbsorbs and addon.UFL_UnitGetTotalAbsorbs(self.unit) or 0;
 	if totalAbsorb > 0 then
 		self:CancelAnimation();

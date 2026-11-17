@@ -275,7 +275,7 @@ function TextSystem.UpdateFrameText(frameType, unit, parentFrame, healthBar, man
     -- Exception: friendly target/player in "both" mode can show both TextSystem + missing-health text.
     local moduleCfg = addon.GetModuleConfig and addon:GetModuleConfig("unitframe_layers")
     local missingHealthEnabled = moduleCfg and moduleCfg.missing_health == true
-    local missingHealthEligible = frameType ~= "pet"
+    local missingHealthEligible = missingHealthEnabled and frameType ~= "pet"
         and addon.UFL_ShouldShowMissingHealthForUnit
         and addon.UFL_ShouldShowMissingHealthForUnit(actualUnit)
     local allowBothWithMissing = (frameType == "target" or frameType == "player" or frameType == "focus")

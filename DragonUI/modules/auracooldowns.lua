@@ -442,13 +442,19 @@ local function ScanAuraCooldownsForFrame(frameName)
     local unitToken = GetUnitTokenForFrame(frameName)
 
     for i = 1, MAX_AURA_BUFFS do
-        local start, duration = GetAuraTiming(unitToken, i, false)
-        TrackCooldown(_G[frameName .. "Buff" .. i .. "Cooldown"], start, duration)
+        local cooldown = _G[frameName .. "Buff" .. i .. "Cooldown"]
+        if cooldown then
+            local start, duration = GetAuraTiming(unitToken, i, false)
+            TrackCooldown(cooldown, start, duration)
+        end
     end
 
     for i = 1, MAX_AURA_DEBUFFS do
-        local start, duration = GetAuraTiming(unitToken, i, true)
-        TrackCooldown(_G[frameName .. "Debuff" .. i .. "Cooldown"], start, duration)
+        local cooldown = _G[frameName .. "Debuff" .. i .. "Cooldown"]
+        if cooldown then
+            local start, duration = GetAuraTiming(unitToken, i, true)
+            TrackCooldown(cooldown, start, duration)
+        end
     end
 end
 
